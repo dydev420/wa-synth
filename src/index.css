@@ -1,0 +1,31 @@
+/* import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css'; */
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: #10090a;
+    --background: #fcf8f9;
+    --primary: #651b2b;
+    --secondary: #e96d88;
+    --accent: #df0c39;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #f6eff0;
+    --background: #080304;
+    --primary: #e498a9;
+    --secondary: #921631;
+    --accent: #f3204e;
+  }
+}
+
+body {
+  /* background-image: url('/cr1.png'); */
+  /* background-color: #82193f; */
+  /* background-image: linear-gradient(#82193f, #82193f); */
+}
+
