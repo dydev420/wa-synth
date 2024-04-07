@@ -96,7 +96,7 @@ function PianoWindow(props) {
    */
 
   /**
-   * Scrolls C4 key into view on load
+   * Scrolls C4 key into view on load with B4 as padding
    */
   const scrollToB4 = () => {
     const keyElement = keysDomRef.current.querySelector(`[data-note=\'B\'][data-octave=\'4\']`);

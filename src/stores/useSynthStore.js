@@ -5,14 +5,19 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { to100Precision } from '../utils/notes';
 import Osc from '../classes/Osc';
 
+// WebAudio Context
 const actx = new window.AudioContext();
 
+// Pipeline nodes
 const osc1 = actx.createOscillator();
 const gain1 = actx.createGain();
 const filter1 = actx.createBiquadFilter();
+const compressor1 = actx.createDynamicsCompressor();
 const analyzer1 = actx.createAnalyser();
-
 analyzer1.fftSize = 2048;
+
+// Main Audio Node
+const mainBus = actx.createGain();
 
 /**
  * Analyzer code
@@ -20,12 +25,23 @@ analyzer1.fftSize = 2048;
 const bufferLength = analyzer1.frequencyBinCount;
 let dataArray = new Uint8Array(bufferLength);
 
-
+// Base oscillator (Not used by UI now)
 osc1.connect(gain1);
+
+// Gain node
 gain1.connect(filter1);
-// gain1.connect(analyzer1);
-filter1.connect(analyzer1);
-analyzer1.connect(actx.destination);
+
+// Filter
+filter1.connect(compressor1);
+
+// Compressor
+compressor1.connect(analyzer1);
+
+// Analyzer
+analyzer1.connect(mainBus);
+
+// Main Destination connection
+mainBus.connect(actx.destination);
 
 const defaultEnvelope = {
   attack: 0.005,
