@@ -16,7 +16,38 @@ const compressor1 = actx.createDynamicsCompressor();
 const analyzer1 = actx.createAnalyser();
 analyzer1.fftSize = 2048;
 
-// Main Audio Node
+/**
+ * Equalizer nodes
+ */
+// In/Out
+const inEQ = actx.createGain();
+const outEQ = actx.createGain();
+
+// Low
+const lowshelfEQ = actx.createBiquadFilter(); 
+lowshelfEQ.type = 'lowshelf';
+lowshelfEQ.frequency.value = 100;
+
+// Mid
+const midEQ = actx.createBiquadFilter(); 
+midEQ.type = 'peaking';
+midEQ.frequency.value = 800;
+midEQ.Q.value = 3;
+
+// High
+const highshelfEQ = actx.createBiquadFilter(); 
+highshelfEQ.type = 'highshelf';
+highshelfEQ.frequency.value = 1600;
+
+// EQ connection
+inEQ.connect(lowshelfEQ);
+lowshelfEQ.connect(midEQ);
+midEQ.connect(highshelfEQ);
+highshelfEQ.connect(outEQ);
+
+/**
+ * Main Audio Line Node
+ */
 const mainBus = actx.createGain();
 
 /**
@@ -25,6 +56,9 @@ const mainBus = actx.createGain();
 const bufferLength = analyzer1.frequencyBinCount;
 let dataArray = new Uint8Array(bufferLength);
 
+/**
+ * Pipeline Connections
+ */
 // Base oscillator (Not used by UI now)
 osc1.connect(gain1);
 
@@ -35,9 +69,13 @@ gain1.connect(filter1);
 filter1.connect(compressor1);
 
 // Compressor
-compressor1.connect(analyzer1);
+// compressor1.connect(analyzer1);
 
-// Analyzer
+// EQ
+compressor1.connect(inEQ);
+outEQ.connect(analyzer1);
+
+// Analyzer to main
 analyzer1.connect(mainBus);
 
 // Main Destination connection
@@ -53,6 +91,12 @@ const defaultEnvelope = {
 const defaultOscConfig = {
   type: 'sawtooth',
   detune: 0,
+};
+
+const defaultEQConfig = {
+  low: 3,
+  mid: 5,
+  high: 4,
 };
 
 let oscNodes = [];
