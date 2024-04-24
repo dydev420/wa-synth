@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/synth.svg" />
+    <link rel="icon" type="image/svg+xml" href="/synth-square-favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
     <!-- Service worker stuff -->
@@ -11,6 +11,7 @@
 
 
     <title>Synth WebAudio</title>
+    <meta name="description" content="Offline PWA Synth App running with WebAudio API">
   </head>
   <body>
     <div id="root"></div>
@@ -18,7 +19,7 @@
     <!-- Service worker stuff -->
     <script>
       if('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js');        
+        navigator.serviceWorker.register('/service-worker.js');
       }
     </script>
     <!-- /////// -->
