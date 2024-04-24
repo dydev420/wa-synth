@@ -5,6 +5,7 @@ const assets = [
   '/index.html',
   '/assets/app.js',
   '/assets/app.css',
+  '/manifest.json',
   '/synth.svg',
   '/synth-square-icons/manifest-icon-192.maskable.png',
   '/synth-square-icons/manifest-icon-512.maskable.png',
