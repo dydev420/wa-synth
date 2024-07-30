@@ -234,9 +234,11 @@ function PianoWindow() {
 
   // Check recorded keys every frame to simulate keys playback
   useAnimationFrame(() => {
-    const keyToPlay = playKeyOnTime(playerTimeRef.current);
-    if (keyToPlay) {
-      simulateKey(keyToPlay, handleKeyPress, handleKeyRelease);
+    const keysToPlay = playKeyOnTime(playerTimeRef.current);
+    if (keysToPlay?.length) {
+      keysToPlay.forEach((keyInfo) => {
+        simulateKey(keyInfo, handleKeyPress, handleKeyRelease);
+      });
     }
   });
 

@@ -51,7 +51,7 @@ const useKeyPlayer = () => {
       return null;
     }
 
-    return foundKeys[0];
+    return foundKeys;
   }
 
   // Time state subscribe
