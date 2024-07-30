@@ -15,7 +15,10 @@ function SynthPanel({
         justifyContent: 'center',
         // flex: '1 1 100%',
         // overflow: 'hidden',
-        border: 1
+        border: 1,
+        '&:has(> :nth-child(2))': {
+          justifyContent: 'space-around'
+        }
       }}
       {...restProps}
     >

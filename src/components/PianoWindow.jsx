@@ -2,10 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes  from 'prop-types';
-import { getFreqAtStep, getFreqForOctaveAtStep } from '../utils/notes';
+import { Box, Typography } from '@mui/material';
+import { getFreqForOctaveAtStep } from '../utils/notes';
 import { REFERENCE_OCTAVE } from '../utils/constants';
+import { simulateKey } from '../utils/playback';
 import useSynthStore from '../stores/useSynthStore';
-import { Box, Stack, Typography } from '@mui/material';
+import useKeyRecorder from '../hooks/useKeyRecorder';
+import useKeyPlayer from '../hooks/useKeyPlayer';
+import useAnimationFrame from '../hooks/useAnimationFrame';
 
 const notes = [
   'C',
@@ -74,7 +78,7 @@ const pianoKeyboardMap = {
  'BracketRight': 'B'
 };
 
-function PianoWindow(props) {
+function PianoWindow() {
   /**
    * State
    */
@@ -84,12 +88,17 @@ function PianoWindow(props) {
   const keysDomRef = useRef(null);
   const pressedKeys = useRef([]);
 
-
   /**
-   * Store
+   * Synth Store
    */
   const makeOsc = useSynthStore(state => state.makeOsc);
   const killOsc = useSynthStore(state => state.killOsc);
+
+  /**
+   * Keys Recorder & Player hooks
+   */
+  const { recordKeyOnPress } = useKeyRecorder();
+  const { timeRef: playerTimeRef, playKeyOnTime } = useKeyPlayer();
 
   /**
    * Methods
@@ -118,7 +127,7 @@ function PianoWindow(props) {
     }
   }
 
-  const handleKeyPress = (note, octave) => {
+  const handleKeyPress = (note, octave, isSimulated) => {
     const octaveFreq = getFreqForOctaveAtStep(octave, noteStepMap[note]);
 
     updateKeyStyle(note, octave, true);
@@ -133,15 +142,25 @@ function PianoWindow(props) {
     if(activeHover !== `${note}${octave}`) {
       setActiveHover(`${note}${octave}`)
     }
+
+    // record key
+    if(!isSimulated) {
+      recordKeyOnPress({ note, octave, type: 'press' });
+    }
   }
 
   
-  const handleKeyRelease = (note, octave) => {
+  const handleKeyRelease = (note, octave, isSimulated = false) => {
     const octaveFreq = getFreqForOctaveAtStep(octave, noteStepMap[note]);
 
     updateKeyStyle(note, octave, false);
 
     killOsc(octaveFreq);
+
+    // record key
+    if(!isSimulated) {
+      recordKeyOnPress({ note, octave, type: 'release' });
+    }
   }
 
   const handleKeyHover = (event) => {
@@ -212,6 +231,14 @@ function PianoWindow(props) {
     }
   }, [handleKeyboardInputDown, handleKeyboardInputUp]);
 
+
+  // Check recorded keys every frame to simulate keys playback
+  useAnimationFrame(() => {
+    const keyToPlay = playKeyOnTime(playerTimeRef.current);
+    if (keyToPlay) {
+      simulateKey(keyToPlay, handleKeyPress, handleKeyRelease);
+    }
+  });
 
   return (
     <Box

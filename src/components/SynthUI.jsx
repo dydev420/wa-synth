@@ -6,7 +6,7 @@ import Envelope from './Envelope';
 import Tweaks from './Tweaks';
 import TweaksTabView from './TweaksTabView';
 import PianoWindow from './PianoWindow';
-
+import KeyRecorder from './KeyRecorder';
 
 function SynthUI() {
   return (
@@ -28,6 +28,7 @@ function SynthUI() {
       >
         <Stack>
           <SynthPanel height="8rem">
+            <KeyRecorder />
             <Oscillator />
           </SynthPanel>
           

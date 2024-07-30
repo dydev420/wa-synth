@@ -16,5 +16,17 @@ export default {
   accent: {
     main: "#bf38e0",
     contrastText: "#100812",
-  }
+  },
+  recordRed: {
+    main: 'red',
+    contrastText: 'white',
+  },
+  playGreen: {
+    main: '#00ff00',
+    contrastText: '#0000ff',
+  },
+  stopRed: {
+    main: '#ff0000',
+    contrastText: '#000000',
+  },
 };
