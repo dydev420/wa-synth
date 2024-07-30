@@ -14,19 +14,19 @@ export default {
     contrastText: "#f0e9f2",
   },
   accent: {
-    main: "#bf38e0",
+    main: "#D78954",
     contrastText: "#100812",
+  },
+  accentSecondary: {
+    main: '#42496D',
+    contrastText: '#000000'
   },
   recordRed: {
     main: 'red',
     contrastText: 'white',
   },
-  playGreen: {
-    main: '#00ff00',
-    contrastText: '#0000ff',
-  },
-  stopRed: {
-    main: '#ff0000',
-    contrastText: '#000000',
+  green: {
+    main: '#A9C354',
+    contrastText: '#ffffff',
   },
 };

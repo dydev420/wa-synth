@@ -1,16 +1,19 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import useKeyRecorder from '../../hooks/useKeyRecorder';
 import TimerDisplay from '../common/TimerDisplay';
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 function KeyRecorderControls() {
   // Key Recorder
   const {
     isRecordingKeys,
     timeRef,
+    saved,
     startRecording,
     stopRecording,
+    resetRecording,
   } = useKeyRecorder();
 
   return (
@@ -26,14 +29,16 @@ function KeyRecorderControls() {
         timeRef={timeRef}
         startRunning = {startRecording}
         stopRunning = {stopRecording}
+        action = {saved ? resetRecording : null }
         labelProps = {{
           idle: 'Record',
         }}
         colorProps = {{
-          idle: 'primary',
+          idle: 'accent',
         }}
         iconProps={{
-          idle: <KeyboardVoiceIcon />
+          idle: <KeyboardVoiceIcon />,
+          action: <DeleteOutlineIcon />,
         }}
       />
     </Box>

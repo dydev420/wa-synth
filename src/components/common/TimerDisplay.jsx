@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import PropTypes  from 'prop-types';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
-import useAnimationFrame from '../../hooks/useAnimationFrame';
-import { noop } from '../../utils/common';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
+import ClearIcon from '@mui/icons-material/Clear';
+import useAnimationFrame from '../../hooks/useAnimationFrame';
+import { noop } from '../../utils/common';
 
 const TIMER_DEFAULTS = {
   labels: {
@@ -12,12 +13,14 @@ const TIMER_DEFAULTS = {
     running: 'Stop',
   },
   colors: {
-    idle: 'playGreen',
-    running: 'stopRed'
+    idle: 'primary',
+    running: 'green',
+    action: 'primary',
   },
   icons: {
     idle: <PlayArrowIcon />,
-    running: < StopCircleIcon />,
+    running: <StopCircleIcon />,
+    action: <ClearIcon />
   },
 }
 
@@ -27,6 +30,7 @@ function TimerDisplay({
   timeRef,
   startRunning = noop,
   stopRunning = noop,
+  action,
   labelProps = { ...TIMER_DEFAULTS.labels },
   colorProps = { ...TIMER_DEFAULTS.colors },
   iconProps = { ...TIMER_DEFAULTS.icons },
@@ -108,7 +112,12 @@ function TimerDisplay({
             </IconButton>
           </Tooltip>
         )}
+        
         <Typography fontFamily="Tilt Neon" fontWeight={900} align='center' ref={timeDisplay} />
+        
+        <IconButton color={ colorProps.action ?? TIMER_DEFAULTS.colors.action } disabled={!action} onClick={action ?? null}>
+          { iconProps.action ?? TIMER_DEFAULTS.icons.action }
+        </IconButton>
     </Box>
   )
 }
@@ -119,6 +128,7 @@ TimerDisplay.propTypes = {
   timeRef: PropTypes.ref,
   startRunning: PropTypes.func,
   stopRunning: PropTypes.func,
+  action: PropTypes.func,
   labelProps: PropTypes.shape({
     idle: PropTypes.string,
     running: PropTypes.string,

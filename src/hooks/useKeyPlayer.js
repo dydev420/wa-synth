@@ -6,9 +6,13 @@ import { getRoundedPlaybackTime } from "../utils/playback";
 
 const useKeyPlayer = () => {
   const isPlayingKeys = useRecordStore(state => state.isPlayingKeys);
+  const looping = useRecordStore(state => state.looping);
   const startKeyPlay = useRecordStore(state => state.startKeyPlay);
   const stopKeyPlay = useRecordStore(state => state.stopKeyPlay);
   const setPlayTime = useRecordStore(state => state.setPlayTime);
+  const resetPlayTime = useRecordStore(state => state.resetPlayTime);
+  const startLoop = useRecordStore(state => state.startLoop);
+  const stopLoop = useRecordStore(state => state.stopLoop);
 
   const playerStatus = useRef(PLAYER_STATUS.IDLE);
   const timeRef = useRef(0);
@@ -42,6 +46,18 @@ const useKeyPlayer = () => {
     stopKeyPlay();
     setPlayerStatus(PLAYER_STATUS.STOPPED);
   };
+
+  const resetPlayer = () => {
+    resetPlayTime();
+  }
+
+  const startLooping = () => {
+    startLoop();
+  }
+
+  const stopLooping = () => {
+    stopLoop();
+  }
 
   const playKeyOnTime = (time) => {
     const playbackTime = getRoundedPlaybackTime(time);
@@ -78,6 +94,10 @@ const useKeyPlayer = () => {
 
   return {
     isPlayingKeys,
+    looping,
+    startLooping,
+    stopLooping,
+    resetPlayer,
     timeRef,
     playTimeRef,
     startPlaying,

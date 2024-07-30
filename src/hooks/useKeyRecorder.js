@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useRecordStore from "../stores/useRecordStore";
 import { RECORDER_STATUS } from "../utils/enums/recorder";
@@ -8,10 +8,15 @@ import { getRoundedPlaybackTime } from "../utils/playback";
 const useKeyRecorder = () => {
   // Store
   const isRecordingKeys = useRecordStore(state => state.isRecordingKeys);
+  const saved = useRecordStore(state => state.saved);
   const recordKey = useRecordStore(state => state.recordKey);
   const startKeyRecord = useRecordStore(state => state.startKeyRecord);
   const stopKeyRecord = useRecordStore(state => state.stopKeyRecord);
   const setRecordTime = useRecordStore(state => state.setRecordTime);
+  const resetRecorder = useRecordStore(state => state.resetRecorder);
+  const saveRecording = useRecordStore(state => state.saveRecording);
+  const loadRecording = useRecordStore(state => state.loadRecording);
+  const deleteRecording = useRecordStore(state => state.deleteRecording);
 
   const recordTick = (time) => {
     setRecordTime(time);
@@ -38,7 +43,14 @@ const useKeyRecorder = () => {
   const stopRecording = () => {
     stopRecordTimer();
     stopKeyRecord();
+    saveRecording();
     recorderStatus.current = RECORDER_STATUS.STOPPED;
+  };
+
+  const resetRecording = () => {
+    resetRecorder();
+    deleteRecording();
+    timeRef.current = 0;
   };
 
   const recordKeyOnPress = (keyId) => {
@@ -49,6 +61,9 @@ const useKeyRecorder = () => {
   };
 
   useEffect(() => {
+    // try to load existing recoding on mount
+    loadRecording();
+
     const recordTimeSubscribe = useRecordStore.subscribe(
       (state) => state.recordTime,
       (recordTime) =>{
@@ -66,8 +81,10 @@ const useKeyRecorder = () => {
     recorderStatus,
     timeRef,
     recordTimeRef,
+    saved,
     startRecording,
     stopRecording,
+    resetRecording,
     recordKeyOnPress,
   }
 };
