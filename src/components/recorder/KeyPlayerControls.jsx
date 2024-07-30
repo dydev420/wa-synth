@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material'
-import useKeyPlayer from '../hooks/useKeyPlayer'
-import TimerDisplay from './common/TimerDisplay';
+import useKeyPlayer from '../../hooks/useKeyPlayer'
+import TimerDisplay from '../common/TimerDisplay';
 import StopIcon from '@mui/icons-material/Stop';
 function KeyPlayerControls() {
   const {

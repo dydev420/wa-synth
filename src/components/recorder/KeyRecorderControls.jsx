@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import useKeyRecorder from '../hooks/useKeyRecorder';
-import TimerDisplay from './common/TimerDisplay';
+import useKeyRecorder from '../../hooks/useKeyRecorder';
+import TimerDisplay from '../common/TimerDisplay';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 function KeyRecorderControls() {

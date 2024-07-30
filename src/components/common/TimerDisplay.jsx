@@ -89,6 +89,7 @@ function TimerDisplay({
           >
             <IconButton
               onClick={handleButtonClick}
+              size="large"
               color= {
                 isRunning
                   ? colorProps.running ?? TIMER_DEFAULTS.colors.running

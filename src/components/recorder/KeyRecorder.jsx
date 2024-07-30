@@ -10,12 +10,11 @@ function KeyRecorder() {
         display: 'flex',
         flexDirection: 'column',
         fontWeight: '700',
-        borderWidth: '2px',
-        borderColor: 'red',
-        borderStyle: 'dashed'
+        // borderWidth: '2px',
+        // borderColor: 'red',
+        // borderStyle: 'dashed'
       }}
     >
-      <span>Key Recorder</span>
       <KeyRecorderControls />
       <KeyPlayerControls />
     </Box>

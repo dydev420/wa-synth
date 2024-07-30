@@ -12,6 +12,7 @@ import {
 import Filter from './Filter';
 import Envelope from './Envelope';
 import WaveAnalyzer from './WaveAnalyzer';
+import KeyRecorder from './recorder/KeyRecorder';
 
 
 export const tabsStyles = () => ({
@@ -102,6 +103,7 @@ function TweaksTabView() {
         >
           <Tab value="filter" label="Filter" />
           <Tab value="visualize" label="Visualize" />
+          <Tab value="record" label="Record" />
           <Tab value="envelope" label="Envelope" />
         </Tabs>
       </Box>
@@ -113,6 +115,10 @@ function TweaksTabView() {
         <WaveAnalyzer />
       </CustomTabPanel>
       
+      <CustomTabPanel activeValue={activeTab} value="record">
+        <KeyRecorder />
+      </CustomTabPanel>
+    
       <CustomTabPanel activeValue={activeTab} value="envelope">
         <Envelope />
       </CustomTabPanel>
