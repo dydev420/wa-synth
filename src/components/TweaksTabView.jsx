@@ -11,7 +11,6 @@ import {
 
 import Filter from './Filter';
 import Envelope from './Envelope';
-import WaveAnalyzer from './WaveAnalyzer';
 import KeyRecorder from './recorder/KeyRecorder';
 import Tempo from './tempo/Tempo';
 
@@ -90,7 +89,7 @@ function CustomTabPanel(props) {
 
 
 function TweaksTabView() {
-  const [activeTab, setActiveTab] = useState('visualize');
+  const [activeTab, setActiveTab] = useState('record');
 
   const handleTabChange = (event, value) => {
     setActiveTab(value)
@@ -106,7 +105,6 @@ function TweaksTabView() {
           onChange={handleTabChange}
         >
           <Tab value="filter" label="Filter" />
-          <Tab value="visualize" label="Visualize" />
           <Tab value="record" label="Record" />
           <Tab value="tempo" label="Tempo" />
           <Tab value="envelope" label="Envelope" />
@@ -114,10 +112,6 @@ function TweaksTabView() {
       </Box>
       <CustomTabPanel activeValue={activeTab} value="filter">
         <Filter />
-      </CustomTabPanel>
-
-      <CustomTabPanel activeValue={activeTab} value="visualize">
-        <WaveAnalyzer />
       </CustomTabPanel>
       
       <CustomTabPanel keepMounted activeValue={activeTab} value="record">

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
-import useSynthStore from '../stores/useSynthStore';
+import useSynthStore from '../../stores/useSynthStore';
 import { Box } from '@mui/material';
 
-function WaveAnalyzer() {
+function WaveAnalyzer(props) {
   /**
    * Refs
    */
@@ -14,13 +14,11 @@ function WaveAnalyzer() {
   const analyzerNode = useSynthStore(state => state.analyzerNode);
   const analyzerData = useSynthStore(state => state.analyzerData);
 
-
   const paintWave = useCallback(() => {
     const canvas = canvasRef.current;
     const canvasCtx = canvas.getContext('2d');
     const WIDTH = canvas.width;
     const HEIGHT = canvas.height;
-    
 
     canvasCtx.fillStyle = "rgb(200, 200, 200)";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -65,8 +63,8 @@ function WaveAnalyzer() {
   }, [updateFrequency])
 
   return (
-    <Box className="analyzer">
-      <canvas ref={canvasRef} className="analyzer-visual" />
+    <Box height={props.height} width={ props.fullWidth ? '100%' : null} className="analyzer">
+      <canvas style={{height: '100%', width: '100%'}} ref={canvasRef} className="analyzer-visual" />
     </Box>
   )
 }

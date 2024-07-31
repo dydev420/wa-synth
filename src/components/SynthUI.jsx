@@ -8,6 +8,7 @@ import TweaksTabView from './TweaksTabView';
 import PianoWindow from './PianoWindow';
 import KeyRecorder from './recorder/KeyRecorder';
 import Tempo from './tempo/Tempo';
+import WaveAnalyzer from './visual/WaveAnalyzer';
 
 function SynthUI() {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -30,7 +31,13 @@ function SynthUI() {
         }}
       >
         <Stack>
-          <SynthPanel height="8rem">
+          {
+            isMobile &&
+              <SynthPanel height="10rem">
+                <WaveAnalyzer fullWidth height="8rem" />
+              </SynthPanel>
+          }
+          <SynthPanel height={ isMobile ? "4rem" : "8rem" }>
             {
               !isMobile && (
                 <>
