@@ -13,6 +13,7 @@ import Filter from './Filter';
 import Envelope from './Envelope';
 import WaveAnalyzer from './WaveAnalyzer';
 import KeyRecorder from './recorder/KeyRecorder';
+import Tempo from './tempo/Tempo';
 
 
 export const tabsStyles = () => ({
@@ -59,7 +60,10 @@ export const tabItemStyles = (theme) => ({
 });
 
 function CustomTabPanel(props) {
-  const { children, value, activeValue, ...other } = props;
+  const { children, value, activeValue, keepMounted, ...other } = props;
+
+  const isActive = value === activeValue;
+  const isMounted = isActive || keepMounted;
 
   return (
     <div
@@ -67,7 +71,7 @@ function CustomTabPanel(props) {
       hidden={value !== activeValue}
       {...other}
     >
-      {value === activeValue && (
+      {isMounted && (
         <Box
         textAlign="center"
           sx={{
@@ -104,6 +108,7 @@ function TweaksTabView() {
           <Tab value="filter" label="Filter" />
           <Tab value="visualize" label="Visualize" />
           <Tab value="record" label="Record" />
+          <Tab value="tempo" label="Tempo" />
           <Tab value="envelope" label="Envelope" />
         </Tabs>
       </Box>
@@ -115,8 +120,12 @@ function TweaksTabView() {
         <WaveAnalyzer />
       </CustomTabPanel>
       
-      <CustomTabPanel activeValue={activeTab} value="record">
+      <CustomTabPanel keepMounted activeValue={activeTab} value="record">
         <KeyRecorder />
+      </CustomTabPanel>
+
+      <CustomTabPanel keepMounted activeValue={activeTab} value="tempo">
+        <Tempo />
       </CustomTabPanel>
     
       <CustomTabPanel activeValue={activeTab} value="envelope">

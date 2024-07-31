@@ -28,15 +28,18 @@ function SynthSlider({
       alignItems="center"
       flex="1"
     >
-      <Typography
-        variant="subtitle2"
-        width="100%"
-        textAlign="center"
-        textOverflow="ellipsis"
-        mb={isVertical ? 1 : -1}
-      >
-        {label}
-      </Typography>
+      {
+        label &&
+          <Typography
+            variant="subtitle2"
+            width="100%"
+            textAlign="center"
+            textOverflow="ellipsis"
+            mb={isVertical ? 1 : -1}
+          >
+            {label}
+          </Typography>
+      }
       <Slider
         // size="small"
         name={name}

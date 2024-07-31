@@ -7,6 +7,7 @@ import Tweaks from './Tweaks';
 import TweaksTabView from './TweaksTabView';
 import PianoWindow from './PianoWindow';
 import KeyRecorder from './recorder/KeyRecorder';
+import Tempo from './tempo/Tempo';
 
 function SynthUI() {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -31,7 +32,12 @@ function SynthUI() {
         <Stack>
           <SynthPanel height="8rem">
             {
-              !isMobile && <KeyRecorder />
+              !isMobile && (
+                <>
+                  <KeyRecorder />
+                  <Tempo />
+                </>
+              ) 
             }
             <Oscillator />
           </SynthPanel>
