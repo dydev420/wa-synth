@@ -2,7 +2,7 @@ import { Box, Stack, useMediaQuery } from '@mui/material';
 import Filter from './Filter';
 import Envelope from './Envelope';
 import TweaksTabView from './TweaksTabView';
-import WaveAnalyzer from './WaveAnalyzer';
+import WaveAnalyzer from './visual/WaveAnalyzer';
 
 function Tweaks() { 
 
@@ -23,7 +23,9 @@ function Tweaks() {
       alignItems="center"
     >
       <Filter />
-      <WaveAnalyzer />
+      {
+        !isMobile && <WaveAnalyzer />
+      }
       <Envelope />
     </Stack>
   )
